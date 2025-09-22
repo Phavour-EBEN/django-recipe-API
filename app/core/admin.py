@@ -1,5 +1,4 @@
 """Django admin cutomization"""
-from dataclasses import field
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from core import models
