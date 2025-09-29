@@ -1,5 +1,7 @@
 """Serializers for the user API"""
+from colorama import Style
 from django.contrib.auth import get_user_model
+from django.utils.translation import trim_whitespace
 from rest_framework import serializers
 
 
@@ -13,3 +15,12 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         """create and return a user with an encrypted password"""
         return get_user_model().objects.create_user(**validated_data)
+
+
+class AuthTokenSerializer(serializers.Serializer):
+    """serializer for the user auth token"""
+    email = serializers.EmailField()
+    password = serializers.CharField(
+        Style ={'input_style':'password'},
+        trim_whitespace=False
+    )
