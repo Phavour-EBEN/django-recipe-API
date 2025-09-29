@@ -1,7 +1,6 @@
 """Serializers for the user API"""
-from colorama import Style
-from django.contrib.auth import get_user_model
-from django.utils.translation import trim_whitespace
+from django.contrib.auth import authenticate, get_user_model
+from django.utils.translation import gettext as _
 from rest_framework import serializers
 
 
@@ -21,6 +20,22 @@ class AuthTokenSerializer(serializers.Serializer):
     """serializer for the user auth token"""
     email = serializers.EmailField()
     password = serializers.CharField(
-        Style ={'input_style':'password'},
+        style ={'input_type':'password'},
         trim_whitespace=False
     )
+
+    def validate(self, attrs):
+        """validate and authenticate the user"""
+        email = attrs.get('email')
+        password = attrs.get('password')
+        user = authenticate(
+            request=self.context.get('request'),
+            username=email,
+            password=password
+        )
+        if not user:
+            msg = _('Unable to authenticate with the provided credentials')
+            raise serializers.ValidationError(msg, code='authorization')
+        
+        attrs['user'] = user
+        return attrs
