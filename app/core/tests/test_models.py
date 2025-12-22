@@ -7,9 +7,10 @@ from django.contrib.auth import get_user_model
 from core import models
 
 
-def create_user(email = "test@example.com", password = "testpassword123"):
+def create_user(email="test@example.com", password="testpassword123"):
     """Create and return a new user"""
     return get_user_model().objects.create_user(email, password)
+
 
 class ModelTest(TestCase):
     """ Test models"""
@@ -18,14 +19,13 @@ class ModelTest(TestCase):
         password = "testpassword@123"
 
         user = get_user_model().objects.create_user(
-            email = email,
-            password = password,
+            email=email,
+            password=password,
         )
 
         self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(password))
 
-    
     def test_new_user_email_normalized(self):
         """Test email is normalized for new users"""
         sample_emails = [
@@ -62,11 +62,11 @@ class ModelTest(TestCase):
         )
 
         recipe = models.Recipe.objects.create(
-            user = user,
-            title = "sample recipe name",
-            time_minutes = 5,
-            price = Decimal("5.50"),
-            description = "sample rcipe description"
+            user=user,
+            title="sample recipe name",
+            time_minutes=5,
+            price=Decimal("5.50"),
+            description="sample rcipe description"
         )
         self.assertEqual(str(recipe), recipe.title)
 

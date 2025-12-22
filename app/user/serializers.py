@@ -23,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
         if password:
             user.set_password(password)
             user.save()
-        
+
         return user
 
 
@@ -31,7 +31,7 @@ class AuthTokenSerializer(serializers.Serializer):
     """serializer for the user auth token"""
     email = serializers.EmailField()
     password = serializers.CharField(
-        style ={'input_type':'password'},
+        style={'input_type': 'password'},
         trim_whitespace=False
     )
 
@@ -47,6 +47,6 @@ class AuthTokenSerializer(serializers.Serializer):
         if not user:
             msg = _('Unable to authenticate with the provided credentials')
             raise serializers.ValidationError(msg, code='authorization')
-        
+
         attrs['user'] = user
         return attrs

@@ -2,7 +2,7 @@
 FROM python:3.9-alpine3.13
 
 # maintainer
-LABEL maintainer="https://ainoo.netlify.app"
+LABEL maintainer="ainooebenezer05@gmail.com"
 
 ENV PYTHONUNBUFFERED=1
 
